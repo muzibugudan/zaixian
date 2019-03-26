@@ -50,32 +50,6 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-//        $arts=[];
-//        $art=Article::get();
-////        所有文章id
-//        $listkey='LIST:ARTICLE';
-////        所有文章内容
-//        $hashkey='HASH:ARTICLE:';
-//        if(Redis::exists($listkey)){
-////            存放所有要获取文章的id
-//            $lists=Redis::lrange($listkey,0,-1);
-//            foreach ($lists as $k=>$v){
-//                $arts=Redis::hgetall($hashkey.$v);
-//            }
-//        }else{
-////            连接数据库  获取数据
-//              $arts = Article::get()->toArray();
-////            将数据存入redis
-//            foreach ($arts as $v){
-////                将文章的id存放到listkey中
-//                Redis::rpush($listkey,$v['art_id']);
-////                将文章添加到hsahkey中
-//                Redis::hmset($hashkey.$v['art_id'],$v);
-//            }
-//
-////            将数据返回
-//
-//        }
         $arts = Article::orderBy('art_id','desc')->join('category',function($join){
             $join->on('article.cate_id','=','category.cate_id');
         })->paginate(7);
